@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${basePath}"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!--
+           可通过<div th:replace="page :: pagenav('url')"></div>的方式引用
+    -->
+    <title>分页导航条</title>
+</head>
+<body>
+<div th:fragment="pagenav(url)" class="pagerDiv">
+    每页大小
+    <select id="currSize" onchange="turnOverPage(1);">
+        <option value="5" th:selected="${pager.pageSize == 5}">5</option>
+        <option value="10" th:selected="${pager.pageSize == 10}">10</option>
+        <option value="15" th:selected="${pager.pageSize == 15}">15</option>
+        <option value="20" th:selected="${pager.pageSize == 20}">20</option>
+    </select>
+    &nbsp;
+    共<span th:text="${pager.rowCount}"></span>条记录&nbsp;
+    当前第<span th:text="${pager.pageNo}"></span>页&nbsp;
+    共<span th:text="${pager.pageCount}"></span>页&nbsp;
+    <span th:if="${pager.firstPage}">
+		          首页&nbsp;上一页
+		</span>
+    <span th:if="${!pager.firstPage}">
+		    <a href='javascript:void(0);' onclick='turnOverPage(1)'>首页&nbsp;</a>
+			<a href='javascript:void(0);' th:onclick="'turnOverPage(\''+ ${pager.pageNo-1} + '\')'">上一页&nbsp;</a>
+		</span>
+    <span th:if="${pager.lastPage}">
+		          下一页&nbsp;尾页
+		</span>
+    <span th:if="${!pager.lastPage}">
+		    <a href='javascript:void(0);' th:onclick="'turnOverPage(\''+ ${pager.pageNo+1} + '\')'">下一页&nbsp;</a>
+			<a href='javascript:void(0);' th:onclick="'turnOverPage(\''+ ${pager.pageCount} + '\')'">尾页&nbsp;</a>
+		</span>
+    &nbsp;
+    转到第<input type='text' size='2' id='jump' />页&nbsp;
+    <input type='button' value='GO' onclick='turnOverPage();' />
+    <form name='pageForm' id='pageForm' th:action='${url}' method='post'>
+        <input type='hidden' id='pageNo' name='pageNo' th:value="${pager.pageNo}" />
+        <input type='hidden' id='pageSize' name='pageSize' th:value="${pager.pageSize}" />
+        <input type='hidden' id='pageCount' name='pageCount' th:value="${pager.pageCount}" />
+    </form>
+</div>
+</body>
+</html>

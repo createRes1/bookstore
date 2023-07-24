@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${basePath}"/>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>错误信息</title>
+</head>
+<body>
+<h1>系统异常</h1>
+<div>
+    发生时间：<span th:text="${timestamp}"></span>
+</div>
+<div>
+    状态码：<span th:text="${status}"></span>
+</div>
+<div>
+    错误提示：<span th:text="${error}"></span>
+</div>
+<div>
+    异常类型：<span th:text="${exception}"></span>
+</div>
+<div>
+    异常信息：<span th:text="${message}"></span>
+</div>
+<div>
+    url：<span th:text="${path}"></span>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${basePath}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <link rel="stylesheet" th:href="@{/css/global.css}"/>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/base.js}"></script>
+    <script th:src="@{/js/list.js}"></script>
+    <title>图书列表</title>
+</head>
+<body>
+<h1>图书管理系统</h1>
+<hr/>
+<div>
+    <form method="post" action="find">
+        <fieldset>
+            <legend>请输入搜索条件</legend>
+            书号：<input type="text" id="isbn" name="isbn" th:value="${session.bookQuery?.isbn}"/>&nbsp;
+            书名：<input type="text" id="book_name" name="bookName" th:value="${session.bookQuery?.bookName}"/>&nbsp;
+            作者：<input type="text" id="author" name="author" th:value="${session.bookQuery?.author}"/>
+            出版社：
+            <select name="companyId">
+                <option value="">---请选择---</option>
+                <option th:each="company:${companyList}"
+                        th:value="${company.companyId}"
+                        th:text="${company.companyName}"
+                        th:selected="${company.companyId}==${session.bookQuery?.companyId}">
+                </option>
+            </select>
+            <p></p>
+            出版日期：<input type="date" id="minDop" name="minDop" th:value="${session.bookQuery?.minDop}"/>
+            - <input type="date" id="maxDop" name="maxDop" th:value="${session.bookQuery?.maxDop}"/>&nbsp;
+            价格：<input type="number" id="minPrice" name="minPrice" style="width:80px;"
+                      th:value="${session.bookQuery?.minPrice}" />
+            - <input type="number" id="maxPrice" name="maxPrice" style="width:80px;"
+                     th:value="${session.bookQuery?.maxPrice}"
+                  />
+            <input type="submit" value="搜索"/>
+            <input type="button" value="重置" onclick="location.href='find';"/>
+        </fieldset>
+    </form>
+</div>
+<p></p>
+<div>
+        <input type="button" value="添加图书"/>&nbsp;&nbsp;&nbsp;<input type="button" value="删除所选"/>
+</div>
+<div>
+    <table  th:if="${not #lists.isEmpty(pager.list)}">
+        <tr>
+            <th><input type="checkbox" name="selectAll"/>全选</th>
+            <th>图书编号</th>
+            <th>图书名称</th>
+            <th>作者</th>
+            <th>出版社</th>
+            <th>出版日期</th>
+            <th>价格</th>
+            <th>内容摘要</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="book,bookStat:${pager.list}"
+            th:class="${bookStat.odd}? 'trOdd':'trEven'">
+            <td><input type="checkbox" name="sel"/></td>
+            <td th:text="${book.isbn}"></td>
+            <td th:text="${book.bookName}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.company.companyName}"></td>
+            <td th:text="${book.dop}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.content}"></td>
+            <td>
+                <input type="button" value="删除" th:id="${book.bookId}"/>
+                <input type="button" value="更新" th:id="${book.bookId}"/>
+            </td>
+        </tr>
+    </table>
+    <div th:if="${#lists.isEmpty(pager.list)}">
+        没有找到任何记录
+    </div>
+    <div>
+        <div th:replace="common/page :: pagenav('toList')"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${basePath}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>系统登录</title>
+</head>
+<body>
+<div style="text-align: center;">
+    <h1>图书管理系统用户登录</h1>
+    <div style="color: red;" th:text="${message}"></div>
+    <form th:action="login">
+        <p>
+            账户：<input type="text" name="username" required/>
+        </p>
+        <p>
+            密码：<input type="password" name="password" required/>
+        </p>
+        <p>
+            <input type="submit" value="点击登录"/>
+            <input type="reset" value="重置"/>
+        </p>
+    </form>
+</div>
+</body>
+</html>

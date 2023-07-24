@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${basePath}"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/base.js}"></script>
+    <script th:src="@{/js/add.js}"></script>
+    <title>添加图书</title>
+</head>
+<body>
+<h1>添加新图书</h1>
+<hr/>
+<div>
+    <form method="post" action="add">
+        <p>
+            图书编号：<input type="text" id="isbn" name="isbn" placeholder="962-215-001-2" required pattern="^\d{3}-\d{3}-\d{3}-\d{1}$"/>
+        </p>
+        <p>
+            图书名称：<input type="text" id="book_name" name="bookName" required />
+        </p>
+        <p>
+            图书作者：<input type="text" id="author" name="author" required />
+        </p>
+        <p>
+            出版社：　<select id="company" name="company.companyId">
+                <option value="">=====请选择=====</option>
+        </select>
+        </p>
+        <p>
+            出版日期：<input type="date" id="dop" name="dop" required />
+        </p>
+        <p>
+            图书价格：<input type="number" id="price" name="price" required step=".01"  min="0"/>
+        </p>
+        <p>
+            内容摘要：<input type="text" id="content" name="content"/>
+        </p>
+        <p>
+            <input type="submit" value="提交"/>
+            <input type="reset" value="重置"/>
+            <input type="button" value="返回首页" onclick="location.href='toList';"/>
+        <p>
+    </form>
+</div>
+</body>
+</html>
